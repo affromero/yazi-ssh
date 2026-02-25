@@ -1,6 +1,12 @@
 # yazi-ssh
 
-Browse remote filesystems in [yazi](https://github.com/sxyazi/yazi) over SSH — like VS Code Remote, but in your terminal.
+**Browse remote filesystems in [yazi](https://github.com/sxyazi/yazi) over SSH — like VS Code Remote, but in your terminal.**
+
+[![CI](https://github.com/affromero/yazi-ssh/actions/workflows/ci.yml/badge.svg)](https://github.com/affromero/yazi-ssh/actions/workflows/ci.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/affromero/yazi-ssh?label=release)](https://github.com/affromero/yazi-ssh/releases/latest)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/affromero/yazi-ssh/blob/main/LICENSE)
+[![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos-informational)](https://github.com/affromero/yazi-ssh)
+[![yazi](https://img.shields.io/badge/yazi-%E2%89%A5%2025.2-orange)](https://yazi-rs.github.io/docs/installation/)
 
 Right-click any file or folder to open, download, or copy its path.
 
