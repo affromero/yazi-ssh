@@ -4,6 +4,8 @@ Browse remote filesystems in [yazi](https://github.com/sxyazi/yazi) over SSH —
 
 Right-click any file or folder to open, download, or copy its path.
 
+![demo](assets/demo.gif)
+
 ## Features
 
 - **SSH browsing** — mount remote filesystems via `sshfs` and browse them natively in yazi
@@ -15,6 +17,8 @@ Right-click any file or folder to open, download, or copy its path.
 ## Context menu
 
 Right-click a file or folder (or press `m`) to open the menu:
+
+![context menu](assets/context-menu.png)
 
 | Key | Action | Description |
 |-----|--------|-------------|
@@ -101,6 +105,8 @@ desc = "Context menu"
 ## Usage
 
 ### Remote browsing
+
+![ssh browsing](assets/ssh-browsing.png)
 
 ```bash
 # Basic
