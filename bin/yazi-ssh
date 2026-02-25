@@ -43,7 +43,6 @@ EOF
 SSH_BASE_OPTS=()
 SCP_BASE_OPTS=()
 TARGET=""
-PORT=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -53,7 +52,6 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         -p)
-            PORT="$2"
             SSH_BASE_OPTS+=(-p "$2")
             SCP_BASE_OPTS+=(-P "$2")
             shift 2
@@ -213,6 +211,7 @@ echo "Remote yazi: ${REMOTE_YAZI_VERSION}"
 # -----------------------------------------------------------------
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PLUGIN_SRC="${SCRIPT_DIR}/main.lua"
+# shellcheck disable=SC2088 # tilde expanded by remote shell, not locally
 REMOTE_PLUGIN_DIR="~/.config/yazi/plugins/yazi-ssh.yazi"
 
 if [[ -f "$PLUGIN_SRC" ]]; then
@@ -226,6 +225,7 @@ fi
 # -----------------------------------------------------------------
 # Auto-provision keymap on server
 # -----------------------------------------------------------------
+# shellcheck disable=SC2088
 REMOTE_KEYMAP="~/.config/yazi/keymap.toml"
 
 if ! ssh "${SSH_BASE_OPTS[@]}" -o ControlMaster=no "$REMOTE_HOST" \
@@ -244,6 +244,7 @@ fi
 # -----------------------------------------------------------------
 # Auto-provision init.lua on server
 # -----------------------------------------------------------------
+# shellcheck disable=SC2088
 REMOTE_INIT="~/.config/yazi/init.lua"
 
 if ! ssh "${SSH_BASE_OPTS[@]}" -o ControlMaster=no "$REMOTE_HOST" \
