@@ -121,7 +121,10 @@ WATCHER_LOG="/tmp/yazi-ssh-downloads-$$.log"
 QUEUE_FILE=""
 WATCHER_PID=""
 
-# Add ControlMaster settings to SSH opts
+# Save user-provided opts (before ControlPath) for the interactive session
+SSH_DIRECT_OPTS=("${SSH_BASE_OPTS[@]}")
+
+# Add ControlMaster settings to SSH opts (used for utility commands + watcher)
 SSH_BASE_OPTS+=(-o "ControlPath=$CTL_SOCK")
 SCP_BASE_OPTS+=(-o "ControlPath=$CTL_SOCK")
 
@@ -283,7 +286,7 @@ mkdir -p "$DOWNLOAD_DIR"
 
 ssh "${SSH_BASE_OPTS[@]}" -o ControlMaster=no "$REMOTE_HOST" \
     "tail -n 0 -f '$QUEUE_FILE'" \
-    | process_downloads >> "$WATCHER_LOG" 2>&1 &
+    < /dev/null | process_downloads >> "$WATCHER_LOG" 2>&1 &
 WATCHER_PID=$!
 
 # -----------------------------------------------------------------
@@ -292,8 +295,8 @@ WATCHER_PID=$!
 echo "Opening yazi on ${REMOTE_HOST}:${START_DIR}..."
 echo ""
 
-ssh "${SSH_BASE_OPTS[@]}" -o ControlMaster=no -t "$REMOTE_HOST" \
-    "env YAZI_SSH_REMOTE='$REMOTE_HOST' YAZI_SSH_QUEUE='$QUEUE_FILE' yazi '$START_DIR'"
+ssh "${SSH_DIRECT_OPTS[@]}" -o ControlPath=none -o ControlMaster=no -e none -t "$REMOTE_HOST" \
+    "env TERM=xterm-256color TERM_PROGRAM=Apple_Terminal YAZI_SSH_REMOTE='$REMOTE_HOST' YAZI_SSH_QUEUE='$QUEUE_FILE' yazi '$START_DIR'"
 
 echo ""
 echo "Disconnected."
