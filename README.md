@@ -7,6 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/affromero/yazi-ssh/blob/main/LICENSE)
 [![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos-informational)](https://github.com/affromero/yazi-ssh)
 [![yazi](https://img.shields.io/badge/yazi-%E2%89%A5%2025.2-orange)](https://yazi-rs.github.io/docs/installation/)
+[![Socket](https://img.shields.io/badge/Socket-protected-blueviolet?logo=socket.dev)](https://socket.dev)
 
 Right-click any file or folder to open, download, or copy its path.
 
