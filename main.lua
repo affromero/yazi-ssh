@@ -100,7 +100,10 @@ local function download_items(sources, dl_dir)
 
 	local ok, fail = 0, 0
 	for _, src in ipairs(sources) do
-		local output = Command("cp"):arg({ "-r", src, dl_dir .. "/" }):stderr(Command.PIPED):output()
+		local output = Command("cp")
+			:arg({ "-r", src, dl_dir .. "/" })
+			:stderr(Command.PIPED)
+			:output()
 
 		if output and output.status and output.status.code == 0 then
 			ok = ok + 1
@@ -215,7 +218,8 @@ return {
 					msg = ok .. " queued, " .. fail .. " failed to queue"
 				end
 			else
-				local dl_dir = os.getenv("YAZI_SSH_DOWNLOAD_DIR") or os.getenv("HOME") .. "/Downloads"
+				local dl_dir = os.getenv("YAZI_SSH_DOWNLOAD_DIR")
+					or os.getenv("HOME") .. "/Downloads"
 				ok, fail = download_items(state.selected, dl_dir)
 				if fail == 0 then
 					msg = ok .. " item(s) downloaded to " .. dl_dir
