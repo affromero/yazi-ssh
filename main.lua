@@ -83,7 +83,7 @@ local function queue_for_download(sources, queue_path)
 	local ok, fail = 0, 0
 	for _, src in ipairs(sources) do
 		local cmd = "printf '%s\\n' " .. shell_escape(src) .. " >> " .. shell_escape(queue_path)
-		local output = Command("sh"):args({ "-c", cmd }):stderr(Command.PIPED):output()
+		local output = Command("sh"):arg({ "-c", cmd }):stderr(Command.PIPED):output()
 		if output and output.status and output.status.code == 0 then
 			ok = ok + 1
 		else
@@ -96,14 +96,11 @@ end
 --- Copy *sources* (list of absolute paths) into *dl_dir* (local mode).
 local function download_items(sources, dl_dir)
 	-- Ensure destination exists
-	Command("mkdir"):args({ "-p", dl_dir }):output()
+	Command("mkdir"):arg({ "-p", dl_dir }):output()
 
 	local ok, fail = 0, 0
 	for _, src in ipairs(sources) do
-		local output = Command("cp")
-			:args({ "-r", src, dl_dir .. "/" })
-			:stderr(Command.PIPED)
-			:output()
+		local output = Command("cp"):arg({ "-r", src, dl_dir .. "/" }):stderr(Command.PIPED):output()
 
 		if output and output.status and output.status.code == 0 then
 			ok = ok + 1
@@ -218,8 +215,7 @@ return {
 					msg = ok .. " queued, " .. fail .. " failed to queue"
 				end
 			else
-				local dl_dir = os.getenv("YAZI_SSH_DOWNLOAD_DIR")
-					or os.getenv("HOME") .. "/Downloads"
+				local dl_dir = os.getenv("YAZI_SSH_DOWNLOAD_DIR") or os.getenv("HOME") .. "/Downloads"
 				ok, fail = download_items(state.selected, dl_dir)
 				if fail == 0 then
 					msg = ok .. " item(s) downloaded to " .. dl_dir
